@@ -51,14 +51,22 @@ async def send_message(channel_id, content):
         f"/channels/{channel_id}/messages", "POST", json={"content": content}
     )
 
+async def send_embed_message(channel_id, content, embed):
+    """ Send a message with content and embed to the given channel ID. """
+    print(f"About to send message with embed: {content}")
+    return await api_call(
+        f"/channels/{channel_id}/messages", "POST", json={"content": content, "embed": embed}
+    )
+
 async def show_help(user_id, channel_id):
     content = f'''<@{user_id}>, here's how you use this bot!
 
 Prepend all commands with `!rune`; valid commands:
-```
-help // Displays this help message.
-{{champion-name}} // Returns the most used rune page for the given champion.
-```'''
+
+- `help`             // Displays this help message.
+- `choices`           // Display valid champion choices.
+- `{{champion-name}}` // Returns the most used rune page for the given champion.
+'''
     return await send_message(channel_id, content)
 
 
@@ -112,10 +120,8 @@ async def start(url):
                             command = message_parts[1]
                             if command == "help":
                                 await show_help(author_id, channel_id)
-                                #break
+                            elif command == "choices":
 
-                            # await send_message(channel_id, full_message)
-                            # break
                 else:
                     pass
 
