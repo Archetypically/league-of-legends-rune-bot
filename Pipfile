@@ -9,6 +9,8 @@ verify_ssl = true
 aiohttp = "*"
 aiodns = "*"
 cchardet = "*"
+bs4 = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"
